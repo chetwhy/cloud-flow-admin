@@ -28,6 +28,7 @@
           min-width="100%"
         />
         <el-table-column
+          fixed="right"
           label="操作"
           min-width="100%"
         >
