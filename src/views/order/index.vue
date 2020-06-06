@@ -13,18 +13,18 @@
           min-width="30%"
         />
         <el-table-column
-          prop="username"
-          label="用户"
+          prop="product"
+          label="商品"
           min-width="100%"
         />
         <el-table-column
-          prop="age"
-          label="年龄"
+          prop="total"
+          label="总数"
           min-width="100%"
         />
         <el-table-column
-          prop="company"
-          label="公司"
+          prop="description"
+          label="描述"
           min-width="100%"
         />
         <el-table-column
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+/* 引入order的api组件*/
 import order from '@/api/order'
 export default {
   name: 'Index',
@@ -51,11 +52,13 @@ export default {
       tableData: []
     }
   },
+  /* 生命周期函数--页面加载时调用*/
   created() {
     this.fetchData()
   },
 
   methods: {
+    // 获取后端数据--获取所有订单
     fetchData() {
       order.getOrderList().then(response => {
         this.tableData = response.data.items
