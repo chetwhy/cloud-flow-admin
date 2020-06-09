@@ -17,5 +17,23 @@ export default {
       url: `${api_name}/${id}`,
       method: 'get'
     })
+  },
+
+  // 保存订单
+  save(temp) {
+    return request({
+      url: api_name,
+      method: 'post',
+      data: temp // 作为请求报文体中的json数据传输
+    })
+  },
+
+  // 更新订单
+  updateById(temp) {
+    return request({
+      url: `${api_name}/${temp.id}`,
+      method: 'put',
+      data: temp // 作为请求报文体中的json数据传输
+    })
   }
 }
