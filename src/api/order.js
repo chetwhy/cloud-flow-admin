@@ -10,6 +10,12 @@ export default {
       method: 'get'
     })
   },
+  testRedirect() {
+    return request({
+      url: '/api/v1/orders/aaa',
+      method: 'get'
+    })
+  },
 
   // 获取指定id订单
   getById(id) {
@@ -32,8 +38,8 @@ export default {
   updateById(temp) {
     return request({
       url: `${api_name}/${temp.id}`,
-      method: 'put',
-      data: temp // 作为请求报文体中的json数据传输
+      method: 'PUT'
+      // data: temp // 作为请求报文体中的json数据传输
     })
   }
 }

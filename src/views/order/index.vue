@@ -32,7 +32,6 @@
           align="center"
         />
         <el-table-column
-          fixed="right"
           label="操作"
           min-width="100%"
           align="center"
@@ -82,6 +81,9 @@
         </el-form>
       </el-dialog>
     </div>
+    <div>
+      <el-button type="primary" size="small" @click="testRedirect()">测试后端直接重定向</el-button>
+    </div>
   </div>
 </template>
 
@@ -100,10 +102,7 @@ export default {
         id: undefined,
         product: '',
         total: 1,
-        title: '',
-        type: '',
-        description: '',
-        status: 'published'
+        description: ''
       }
     }
   },
@@ -119,6 +118,13 @@ export default {
         this.tableData = response.data.items
         console.log(this.tableData)
       })
+    },
+    testRedirect() {
+      /* order.testRedirect().then(response => {
+        console.log('已请求后端')
+        console.log(response)
+      })*/
+      window.location.href = 'http://localhost:9100/api/v1/orders/aaa'
     },
     // 查看订单
     viewOrder(id) {
@@ -166,16 +172,15 @@ export default {
     // 更新订单
     updateOrder() {
       console.log(this.temp)
-      order.save(this.temp).then(response => {
-        return this.$message({
-          type: 'success',
-          message: '更新成功'
+      order.updateById(this.temp)
+        .then(response => {
+          return this.$message({
+            type: 'success',
+            message: '更新成功'
+          })
+        }).then(response => {
+          this.$router.push({ path: '/orders/list' })
         })
-      }).then(response => {
-        this.$router.push({ path: '/orders/list' })
-      })
-
-      this.dialogEditVisible = false
     }
   }
 }
