@@ -36,10 +36,10 @@ export default {
 
   // 更新订单
   updateById(temp) {
-    return request({
+    return request({// 封装axios
       url: `${api_name}/${temp.id}`,
-      method: 'PUT'
-      // data: temp // 作为请求报文体中的json数据传输
+      method: 'put',
+      data: temp
     })
   }
 }

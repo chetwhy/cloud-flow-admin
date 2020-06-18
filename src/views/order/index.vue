@@ -116,7 +116,6 @@ export default {
     fetchData() {
       order.getOrderList().then(response => {
         this.tableData = response.data.items
-        console.log(this.tableData)
       })
     },
     testRedirect() {
@@ -152,10 +151,11 @@ export default {
     },
     saveOrUpdate() {
       this.saveBtnDisabled = true
+      console.log('更新或保存订单')
       if (!this.temp.id) {
-        this.saveOrder()
+        this.saveOrder(this.temp)
       } else {
-        this.updateOrder()
+        this.updateOrder(this.temp)
       }
     },
     // 保存订单
@@ -165,22 +165,18 @@ export default {
           type: 'success',
           message: '保存成功!'
         })
-      }).then(response => {
-        this.$router.push({ path: '/orders/list' })
       })
     },
     // 更新订单
     updateOrder() {
-      console.log(this.temp)
-      order.updateById(this.temp)
-        .then(response => {
-          return this.$message({
-            type: 'success',
-            message: '更新成功'
-          })
-        }).then(response => {
-          this.$router.push({ path: '/orders/list' })
+      order.updateById(this.temp).then(response => {
+        this.$message({
+          type: 'success',
+          message: '保存成功!'
         })
+        this.dialogEditVisible = false
+        this.fetchData()
+      })
     }
   }
 }
