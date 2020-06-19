@@ -1,6 +1,11 @@
 <template>
-  <div>
+  <div class="app-container">
     <h2>订单管理vue</h2>
+    <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;margin-bottom: 10px" type="primary" icon="el-icon-edit" @click="addOrder">
+        Add
+      </el-button>
+    </div>
     <div>
       <el-table
         :data="tableData"
@@ -75,7 +80,7 @@
             <el-input v-model="temp.description" />
           </el-form-item>
           <el-form-item>
-            <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">更新</el-button>
+            <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">确认</el-button>
             <el-button @click="dialogEditVisible = false">取消</el-button>
           </el-form-item>
         </el-form>
@@ -141,6 +146,12 @@ export default {
       this.saveBtnDisabled = false
       this.temp = Object.assign({}, row)
     },
+    // 新增订单
+    addOrder() {
+      this.resetTemp()
+      this.dialogEditVisible = true
+      this.saveBtnDisabled = false
+    },
     // 关闭对话框
     handleClose(done) {
       this.$confirm('确认关闭？')
@@ -148,6 +159,15 @@ export default {
           done()
         })
         .catch(_ => {})
+    },
+    // 重置temp
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        product: '',
+        total: 1,
+        description: ''
+      }
     },
     saveOrUpdate() {
       this.saveBtnDisabled = true
@@ -157,6 +177,8 @@ export default {
       } else {
         this.updateOrder(this.temp)
       }
+      this.dialogEditVisible = false
+      this.fetchData()
     },
     // 保存订单
     saveOrder() {
@@ -174,8 +196,6 @@ export default {
           type: 'success',
           message: '保存成功!'
         })
-        this.dialogEditVisible = false
-        this.fetchData()
       })
     }
   }

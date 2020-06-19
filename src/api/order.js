@@ -27,8 +27,9 @@ export default {
 
   // 保存订单
   save(temp) {
+    console.log(JSON.stringify(temp))
     return request({
-      url: api_name,
+      url: `${api_name}/`,
       method: 'post',
       data: temp // 作为请求报文体中的json数据传输
     })
